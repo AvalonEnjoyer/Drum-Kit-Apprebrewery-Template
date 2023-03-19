@@ -34,19 +34,34 @@ function onPress(input) {
   }
 }
 
+var acceptedInputs = ["w", "a", "s", "d", "k", "k", "l"];
+
+function buttonAnimation(pressedKey) {
+  if (acceptedInputs.includes(pressedKey)) {
+    var activeButton = document.querySelector("." + pressedKey);
+    activeButton.classList.add("pressed"); //adding class pressed to the button after it's been clicked / keypressed
+
+    setTimeout(function () {
+      activeButton.classList.remove("pressed");
+    }, 100); //removing the class pressed after a timer of .1 seconds to give an animation effect
+  }
+}
+// Following code adds event listener to the buttons and calls onPress function with the buttons' InnerHTML when clicked
+
 let btns = document.querySelectorAll(".drum ");
 
 for (i of btns) {
   i.addEventListener("click", function () {
     var buttonInnerHTML = this.innerHTML;
     onPress(buttonInnerHTML);
-
+    buttonAnimation(buttonInnerHTML);
     // console.log((this.style.color = "white"));
   });
 }
-
+// A high order function which takes another function as an input (parameter)
 document.addEventListener("keydown", function (Event) {
   var keyPress = Event.key;
+  console.log(keyPress);
   onPress(keyPress);
-  //   onPress(keyPress);
+  buttonAnimation(keyPress);
 });
